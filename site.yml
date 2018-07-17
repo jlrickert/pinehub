@@ -1,10 +1,8 @@
 ---
 - hosts: pi
   become: yes
-  vars:
   roles:
-    - common
-    - ssh
+    - { role: common, user: jlrickert }
     - dns
     - internet-share
     - openvpn

@@ -3,13 +3,59 @@
   apt:
     name: "{{ packages }}"
     state: present
-    update_cache: yes
-  vars:
-    packages:
-      - htop
-      - python
-      - python3
-      - silversearcher-ag
-      - tree
-      - vim
-      - zsh
+
+- name: "Create {{ user }} user"
+  user:
+    name: "{{ user }}"
+    state: present
+    shell: /usr/bin/zsh
+    groups:
+      - adm
+      - dialout
+      - cdrom
+      - sudo
+      - audio
+      - video
+      - plugdev
+      - games
+      - users
+      - input
+      - netdev
+      - pi
+      - spi
+      - i2c
+      - gpio
+
+- name: Set authorization key for {{ user }}
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: https://github.com/jlrickert.keys
+
+- name: Set authorization key for pi user
+  authorized_key:
+    user: pi
+    state: present
+    key: https://github.com/jlrickert.keys
+
+- name: Copy sudo configuration
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers
+    mode: 440
+    validate: 'visudo -cf %s'
+  become: true
+  
+- name: Copy sshd configuration
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+  become: true
+  notify:
+    restart sshd
+
+- name: Enable and start SSH Daemon
+  service:
+    name: sshd.service
+    enabled: yes
+    state: started

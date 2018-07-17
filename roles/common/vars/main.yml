@@ -1,2 +1,10 @@
 ---
-# vars file for common
+packages:
+  - htop
+  - python
+  - python3
+  - silversearcher-ag
+  - ssh
+  - tree
+  - vim
+  - zsh
