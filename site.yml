@@ -1,0 +1,10 @@
+---
+- hosts: pi
+  become: yes
+  vars:
+  roles:
+    - common
+    - ssh
+    - dns
+    - internet-share
+    - openvpn
