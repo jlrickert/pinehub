@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+allow-hotplug eth0
+iface eth0 inet static
+    address {{ static_ip }}
+    netmask 255.255.255.0
+    network {{ network_ip }}
+    broadcast {{ broadcast_ip }}
+

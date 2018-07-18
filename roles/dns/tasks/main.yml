@@ -1,2 +1,17 @@
 ---
-# tasks file for dns
+- name: Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: present
+
+- name: Copy dnsmasq base config
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+  become: true
+  
+- name: Enable and start dnsmasq
+  service:
+    name: dnsmasq.service
+    enabled: yes
+    state: started

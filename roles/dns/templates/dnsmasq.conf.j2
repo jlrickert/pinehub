@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+
+addn-hosts=/etc/pihole/local.list
+addn-hosts=/etc/pihole/black.list
+
+interface=eth0
+listen-address=192.168.100.1
+bind-interfaces # ensures things are only sent to the interface and not elsewere
+server=8.8.8.8 # dns server
+server=8.8.4.4
+domain-needed # dont forward short names
+bogus-priv # never forward addresses in the non-routed address spaces
+
+dhcp-range=192.168.100.10,192.168.100.150,12h
+
+# Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
+dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
+dhcp-reply-delay=tag:client_is_a_pi,2

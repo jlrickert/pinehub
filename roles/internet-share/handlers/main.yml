@@ -1,2 +1,9 @@
 ---
-# handlers file for internet-share
+- name: retart network
+  service:
+    name: ifup@eth0.service
+    state: restarted
+
+- name: reload iptables
+  shell: /sbin/iptables-restore < /etc/iptables.ipv4.nat
+  become: yes
