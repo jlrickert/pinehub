@@ -3,6 +3,9 @@
   become: yes
   roles:
     - { role: common, user: jlrickert }
-    - internet-share
-    - dns
+    - { role: pihole
+      , static_ip: 192.168.100.1
+      , network_ip: 192.168.100.0
+      , broadcast_ip: 192.168.100.255
+      }
     - openvpn

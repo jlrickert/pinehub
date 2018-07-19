@@ -1,3 +1,6 @@
 ---
 hosts_repo: https://github.com/StevenBlack/hosts
 hosts_dir: /usr/local/share/hosts
+static_ip: 192.168.100.1
+network_ip: 192.168.100.0
+broadcast_ip: 192.168.100.255

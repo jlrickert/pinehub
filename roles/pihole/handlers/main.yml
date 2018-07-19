@@ -1,4 +1,13 @@
 ---
+- name: restart dnsmasq
+  service:
+    name: dnsmasq.service
+    state: restarted
+
+- name: update hosts
+  command: /usr/local/bin/update_hosts
+  notify: restart dnsmasq
+
 - name: retart network
   service:
     name: ifup@eth0.service
