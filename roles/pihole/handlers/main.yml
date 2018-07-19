@@ -16,3 +16,7 @@
 - name: reload iptables
   shell: /sbin/iptables-restore < /etc/iptables.ipv4.nat
   become: yes
+
+- name: reload systemd
+  command: systemctl daemon-reload
+  become: yes

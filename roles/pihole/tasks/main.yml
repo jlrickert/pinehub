@@ -83,3 +83,21 @@
     requirements: requirements.txt
     virtualenv: "{{ hosts_dir }}/venv"
     virtualenv_python: python3
+
+- name: Copy update_hosts service file
+  template:
+    src: update_hosts.service.j2
+    dest: /etc/systemd/system/update_hosts.service
+  notify: reload systemd
+
+- name: Copy update_hosts timer
+  template:
+    src: update_hosts.timer.j2
+    dest: /etc/systemd/system/update_hosts.timer
+  notify: reload systemd
+
+- name: Start update_hosts timer
+  service:
+    name: update_hosts.timer
+    enabled: yes
+    state: started
