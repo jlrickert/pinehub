@@ -1,2 +1,3 @@
 ---
-# vars file for dns
+hosts_repo: https://github.com/StevenBlack/hosts
+hosts_dir: /usr/local/share/hosts

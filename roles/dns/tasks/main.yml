@@ -3,15 +3,53 @@
   apt:
     name: dnsmasq
     state: present
-
-- name: Copy dnsmasq base config
-  template:
-    src: dnsmasq.conf.j2
-    dest: /etc/dnsmasq.conf
-  become: true
   
 - name: Enable and start dnsmasq
   service:
     name: dnsmasq.service
     enabled: yes
     state: started
+
+- name: Copy dnsmasq base config
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+  notify: restart dnsmasq
+
+- name: Ensure pihole directory exists
+  file:
+    path: /etc/pihole
+    state: directory
+
+- name: Install dependencies for {{ hosts_repo }}
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - libxml2-dev
+      - libxslt-dev
+      - python3
+      - python3-pip
+      - virtualenv
+
+- name: Download {{ hosts_repo }}
+  git:
+    repo: "{{ hosts_repo }}"
+    dest: "{{ hosts_dir }}"
+    clone: yes
+    update: no
+
+- name: Install python dependencies for {{ hosts_repo }}
+  pip:
+    chdir: "{{ hosts_dir }}"
+    requirements: requirements.txt
+    virtualenv: "{{ hosts_dir }}/venv"
+    virtualenv_python: python3
+    
+- name: Install update_hosts
+  template:
+    src: update_hosts.j2
+    dest: /usr/local/bin/update_hosts
+    mode: "4755"
+  notify: restart dnsmasq

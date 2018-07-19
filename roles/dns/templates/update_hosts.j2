@@ -1,0 +1,13 @@
+#!/bin/bash
+# {{ ansible_managed }}
+
+PYTHON_BIN={{ hosts_dir }}/venv/bin/python
+SRC_DIR={{ hosts_dir }}
+
+cd $SRC_DIR
+$PYTHON_BIN updateHostsFile.py \
+    --auto \
+    --extensions porn fakenews \
+    --backup \
+    --output /etc/pihole
+

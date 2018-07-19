@@ -19,7 +19,6 @@
     dest: /etc/iptables.ipv4.nat
   become: true
   notify: reload iptables
-  
 
 - name: Restore iptables on reboot
   lineinfile:
