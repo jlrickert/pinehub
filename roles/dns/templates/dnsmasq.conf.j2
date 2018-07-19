@@ -3,6 +3,7 @@
 addn-hosts=/etc/pihole/hosts
 
 interface=eth0
+interface=wlan0
 listen-address=192.168.100.1
 bind-interfaces # ensures things are only sent to the interface and not elsewere
 
@@ -11,6 +12,7 @@ server=8.8.4.4
 domain-needed # dont forward short names
 bogus-priv # never forward addresses in the non-routed address spaces
 
+no-dhcp-interface=wlan0
 dhcp-range=192.168.100.10,192.168.100.150,12h
 #dhcp-range=fe80::100, fe80::, 64, 12h
 
